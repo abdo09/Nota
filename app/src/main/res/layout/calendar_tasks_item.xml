@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="task"
+            type="abdo.omer.notes.data.models.Task" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/sixteen_dp"
+            android:text="9:10"
+            android:textSize="@dimen/twenty_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/task_indicator"
+            android:layout_width="@dimen/ten_dp"
+            android:layout_height="@dimen/ten_dp"
+            android:layout_margin="@dimen/sixteen_dp"
+            android:src="@drawable/ic_shopping_circle_indicator"
+            app:layout_constraintBottom_toBottomOf="@+id/time"
+            app:layout_constraintStart_toEndOf="@id/time"
+            app:layout_constraintTop_toTopOf="@+id/time" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/eight_dp"
+            app:cardCornerRadius="@dimen/eight_dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/task_indicator"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/sixteen_dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/task_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_shopping" />
+
+                <TextView
+                    android:id="@+id/tv_task_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="1dp"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/eight_dp"
+                    android:paddingEnd="@dimen/eight_dp"
+                    android:singleLine="true"
+                    android:text="Shopping list, food for the weekfsfsfsfsffsfsf"
+                    android:textColor="#181743"
+                    android:textSize="@dimen/sixteen_sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/task_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/task_icon"
+                    app:layout_constraintTop_toTopOf="@+id/task_icon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

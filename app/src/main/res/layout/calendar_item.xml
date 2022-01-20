@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="local_date"
+            type="java.time.LocalDate" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/sixteen_dp">
+
+        <TextView
+            android:id="@+id/day_of_the_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/four_dp"
+            android:textSize="@dimen/twenty_four_sp"
+            android:text="22" />
+
+        <TextView
+            android:id="@+id/day_of_the_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/four_dp"
+            android:text="MON"
+            android:textSize="@dimen/sixteen_sp" />
+
+    </LinearLayout>
+
+</layout>

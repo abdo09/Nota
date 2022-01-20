@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Nota</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_first_time">pref_first_time</string>
+    <string name="pref_language">pref_language</string>
+    <string name="pref_uid">pref_uid</string>
+    <string name="pref_access_token">pref_access_token</string>
+    <string name="pref_refresh_token">pref_refresh_token</string>
+    <string name="internet_not_available">No internet available</string>
+    <string name="retry">Retry</string>
+    <string name="network_error">Network error</string>
+    <string name="add">Add</string>
+    <string name="pref_selected_date">pref_selected_date</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="new_task">NEW TASK</string>
+    <string name="task_name">Task name</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="pref_selected_icon">pref_selected_icon</string>
+</resources>
