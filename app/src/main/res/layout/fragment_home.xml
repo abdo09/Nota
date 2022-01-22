@@ -40,9 +40,9 @@
             android:id="@+id/tasks_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/eight_dp"
             android:clipToPadding="false"
             android:paddingBottom="200dp"
-            android:layout_marginTop="@dimen/eight_dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_title"
@@ -52,10 +52,10 @@
             android:id="@+id/tasks_recycler_view_done"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/eight_dp"
             android:clipToPadding="false"
             android:paddingBottom="200dp"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/eight_dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_title"
@@ -76,12 +76,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline2">
 
             <LinearLayout
-                android:gravity="center"
                 android:id="@+id/calendar_add_task_layout"
-                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/sixteen_dp"
+                android:gravity="center"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -111,6 +111,7 @@
                     android:layout_margin="@dimen/sixteen_dp"
                     app:srcCompat="@drawable/ic_add_task"
                     tools:targetApi="p" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btn_open_calendar"
                     android:layout_width="wrap_content"
@@ -122,11 +123,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/do_and_undo_changes_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/sixteen_dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">

@@ -37,6 +37,12 @@ class CompletedTasksFragment : BaseSupportFragment() {
         viewmodelObserver()
     }
 
+    override fun setOnclickLister() {
+        binding.btnBack.setOnClickListener {
+            navController.navigate(CompletedTasksFragmentDirections.actionNavCompletedTasksFragmentToNavHomeFragment())
+        }
+    }
+
     private fun setupRecyclerView() {
         completedTaskAdapter = CompletedTaskAdapter()
         binding.completedTasksRecyclerView.apply {
@@ -52,7 +58,8 @@ class CompletedTasksFragment : BaseSupportFragment() {
 
     private fun viewmodelObserver() {
         viewModel.taskList.observe(viewLifecycleOwner, {
-            completedTaskAdapter.differ.submitList(it)
+            val finishedTasks = it.filter { task -> task.taskIsDone }
+            completedTaskAdapter.differ.submitList(finishedTasks)
         })
     }
 

@@ -53,30 +53,35 @@ class TasksAdapter : RecyclerView.Adapter<TasksAdapter.TasksViewHolder>() {
         holder.bind(task)
 
         holder.taskItemBinding.apply {
+
+            this.root.setOnClickListener {
+                onTaskClickListener?.let { it(task) }
+            }
+
             when(task.key){
                 TaskKey.SHOPPING -> {
-                    taskIcon.context.apply { loadWithGlide(taskIcon, this.getCustomDrawable(R.drawable.ic_shopping)) }
-                    taskIndicator.context.apply { loadWithGlide(taskIndicator, this.getCustomDrawable(R.drawable.ic_shopping_circle_indicator)) }
+                    taskIcon.setImageResource(R.drawable.ic_shopping)
+                    taskIndicator.setImageResource(R.drawable.ic_shopping_circle_indicator)
                 }
                 TaskKey.SPORTS -> {
-                    taskIcon.context.apply { loadWithGlide(taskIcon, this.getCustomDrawable(R.drawable.ic_sports)) }
-                    taskIndicator.context.apply { loadWithGlide(taskIndicator, this.getCustomDrawable(R.drawable.ic_sports_circle_indicator)) }
+                    taskIcon.setImageResource(R.drawable.ic_sports)
+                    taskIndicator.setImageResource(R.drawable.ic_sports_circle_indicator)
                 }
                 TaskKey.GOTO -> {
-                    taskIcon.context.apply { loadWithGlide(taskIcon, this.getCustomDrawable(R.drawable.ic_go_to)) }
-                    taskIndicator.context.apply { loadWithGlide(taskIndicator, this.getCustomDrawable(R.drawable.ic_go_to_circle_indicator)) }
+                    taskIcon.setImageResource(R.drawable.ic_go_to)
+                    taskIndicator.setImageResource(R.drawable.ic_go_to_circle_indicator)
                 }
                 TaskKey.EVENT -> {
-                    taskIcon.context.apply { loadWithGlide(taskIcon, this.getCustomDrawable(R.drawable.ic_event)) }
-                    taskIndicator.context.apply { loadWithGlide(taskIndicator, this.getCustomDrawable(R.drawable.ic_event_circle_indicator)) }
+                    taskIcon.setImageResource(R.drawable.ic_event)
+                    taskIndicator.setImageResource(R.drawable.ic_event_circle_indicator)
                 }
                 TaskKey.GYM -> {
-                    taskIcon.context.apply { loadWithGlide(taskIcon, this.getCustomDrawable(R.drawable.ic_gym)) }
-                    taskIndicator.context.apply { loadWithGlide(taskIndicator, this.getCustomDrawable(R.drawable.ic_gym_circle_indicator)) }
+                    taskIcon.setImageResource(R.drawable.ic_gym)
+                    taskIndicator.setImageResource(R.drawable.ic_gym_circle_indicator)
                 }
                 TaskKey.OTHERS -> {
-                    taskIcon.context.apply { loadWithGlide(taskIcon, this.getCustomDrawable(R.drawable.ic_others)) }
-                    taskIndicator.context.apply { loadWithGlide(taskIndicator, this.getCustomDrawable(R.drawable.ic_others_circle_indicator)) }
+                    taskIcon.setImageResource(R.drawable.ic_others)
+                    taskIndicator.setImageResource(R.drawable.ic_others_circle_indicator)
                 }
             }
             tvTaskTitle.text = task.name

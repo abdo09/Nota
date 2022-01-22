@@ -88,19 +88,11 @@ class HomeFragment : BaseSupportFragment() {
         }
 
         binding.btnOpenCalendar.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "btnOpenCalendar tasks Clicked",
-                Toast.LENGTH_SHORT
-            ).show()
+            navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToNavCalenderFragment())
         }
 
-        binding.btnAddTask.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "btnAddTask tasks Clicked",
-                Toast.LENGTH_SHORT
-            ).show()
+        binding.btnCompletedTasks.setOnClickListener {
+            navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToNavCompletedTasksFragment())
         }
 
         binding.btnDoChanges.setOnClickListener {
@@ -133,6 +125,10 @@ class HomeFragment : BaseSupportFragment() {
 
         binding.btnAddTask.setOnClickListener {
             navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToAddTaskFragment())
+        }
+
+        tasksAdapter.setOnItemClickListener { task ->
+            navController.navigate(HomeFragmentDirections.actionNavSentBottomSheetFragment(task = task))
         }
 
     }

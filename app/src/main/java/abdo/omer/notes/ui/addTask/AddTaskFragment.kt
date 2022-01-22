@@ -58,7 +58,6 @@ class AddTaskFragment : BaseSupportFragment() {
         addTaskIconAdapter.setOnCheckedListener {
             addTaskIconAdapter.notifyDataSetChanged()
             setBoarderColor()
-            viewModel.task.key = it
         }
 
         binding.btnOpenDate.setOnClickListener {
@@ -88,13 +87,15 @@ class AddTaskFragment : BaseSupportFragment() {
         val description = binding.edDescription.text.toString()
         val date = viewModel.task.day.dayInLong
         val time = viewModel.task.time
+
         if (name.isEmpty()) binding.ipNameLayout.setBoarder(R.color.text_input_stroke_red_color)
         else viewModel.task.name = name
 
-        if (description.isEmpty()) binding.edDescription.background = descriptionDrawable(R.color.red_400, requireContext())
+        if (description.isEmpty()) binding.edDescription.background =
+            descriptionDrawable(R.color.red_400, requireContext())
         else viewModel.task.description = description
 
-        return (name.isNotEmpty() || description.isNotEmpty() || date != 0L || time.isNotEmpty())
+        return (name.isNotEmpty() && description.isNotEmpty() && date != 0L && time.isNotEmpty())
     }
 
     @SuppressLint("SetTextI18n")
@@ -116,20 +117,24 @@ class AddTaskFragment : BaseSupportFragment() {
             val minute = timePicker.minute
 
             if (hour <= 9) {
-                binding.tvTime.text = "0$hour : $minute"
-                viewModel.task.time = "0$hour : $minute"
+                val time = "0$hour:$minute"
+                binding.tvTime.text = time
+                viewModel.task.time = time
             }
             if (minute <= 9) {
-                binding.tvTime.text = "$hour : 0$minute"
-                viewModel.task.time = "$hour : 0$minute"
+                val time = "$hour:0$minute"
+                binding.tvTime.text = time
+                viewModel.task.time = time
             }
             if (hour <= 9 && minute <= 9) {
-                binding.tvTime.text = "0$hour : 0$minute"
-                viewModel.task.time = "0$hour : 0$minute"
+                val time = "0$hour:0$minute"
+                binding.tvTime.text = time
+                viewModel.task.time = time
             }
             if (hour > 9 && minute > 9) {
-                binding.tvTime.text = "$hour : $minute"
-                viewModel.task.time = "$hour : $minute"
+                val time = "$hour:$minute"
+                binding.tvTime.text = time
+                viewModel.task.time = time
             }
 
         }
@@ -177,7 +182,9 @@ class AddTaskFragment : BaseSupportFragment() {
                 drawable(context = requireContext(), backgroundColor = R.color.shopping_color)
             binding.view2.background =
                 drawable(context = requireContext(), backgroundColor = R.color.shopping_color)
-            binding.edDescription.background = descriptionDrawable(R.color.shopping_color, requireContext())
+            binding.edDescription.background =
+                descriptionDrawable(R.color.shopping_color, requireContext())
+            viewModel.task.key = TaskKey.SHOPPING
         }
         if (selectedIcon == TaskKey.SPORTS.name) {
             binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_sports_color)
@@ -185,7 +192,9 @@ class AddTaskFragment : BaseSupportFragment() {
                 drawable(context = requireContext(), backgroundColor = R.color.sports_color)
             binding.view2.background =
                 drawable(context = requireContext(), backgroundColor = R.color.sports_color)
-            binding.edDescription.background = descriptionDrawable(R.color.sports_color, requireContext())
+            binding.edDescription.background =
+                descriptionDrawable(R.color.sports_color, requireContext())
+            viewModel.task.key = TaskKey.SPORTS
         }
         if (selectedIcon == TaskKey.GOTO.name) {
             binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_go_to_color)
@@ -193,7 +202,9 @@ class AddTaskFragment : BaseSupportFragment() {
                 drawable(context = requireContext(), backgroundColor = R.color.go_to_color)
             binding.view2.background =
                 drawable(context = requireContext(), backgroundColor = R.color.go_to_color)
-            binding.edDescription.background = descriptionDrawable(R.color.go_to_color, requireContext())
+            binding.edDescription.background =
+                descriptionDrawable(R.color.go_to_color, requireContext())
+            viewModel.task.key = TaskKey.GOTO
         }
         if (selectedIcon == TaskKey.EVENT.name) {
             binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_event_color)
@@ -201,7 +212,9 @@ class AddTaskFragment : BaseSupportFragment() {
                 drawable(context = requireContext(), backgroundColor = R.color.event_color)
             binding.view2.background =
                 drawable(context = requireContext(), backgroundColor = R.color.event_color)
-            binding.edDescription.background = descriptionDrawable(R.color.event_color, requireContext())
+            binding.edDescription.background =
+                descriptionDrawable(R.color.event_color, requireContext())
+            viewModel.task.key = TaskKey.EVENT
         }
         if (selectedIcon == TaskKey.GYM.name) {
             binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_gym_color)
@@ -209,7 +222,9 @@ class AddTaskFragment : BaseSupportFragment() {
                 drawable(context = requireContext(), backgroundColor = R.color.gym_color)
             binding.view2.background =
                 drawable(context = requireContext(), backgroundColor = R.color.gym_color)
-            binding.edDescription.background = descriptionDrawable(R.color.gym_color, requireContext())
+            binding.edDescription.background =
+                descriptionDrawable(R.color.gym_color, requireContext())
+            viewModel.task.key = TaskKey.GYM
         }
         if (selectedIcon == TaskKey.OTHERS.name) {
             binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_others_color)
@@ -217,7 +232,9 @@ class AddTaskFragment : BaseSupportFragment() {
                 drawable(context = requireContext(), backgroundColor = R.color.others_color)
             binding.view2.background =
                 drawable(context = requireContext(), backgroundColor = R.color.others_color)
-            binding.edDescription.background = descriptionDrawable(R.color.others_color, requireContext())
+            binding.edDescription.background =
+                descriptionDrawable(R.color.others_color, requireContext())
+            viewModel.task.key = TaskKey.OTHERS
         }
     }
 

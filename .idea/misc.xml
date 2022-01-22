@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/drawable/b2b_gradient_orange.xml" value="0.38958333333333334" />
+        <entry key="app/src/main/res/drawable/bottom_sheet_dialog.xml" value="0.3175925925925926" />
+        <entry key="app/src/main/res/drawable/bottom_sheet_top_background.xml" value="0.3175925925925926" />
         <entry key="app/src/main/res/drawable/checkbox_back.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/drawable/description_background.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/drawable/error_red_icon.xml" value="0.2265625" />
@@ -45,6 +47,7 @@
         <entry key="app/src/main/res/layout/fragment_completed.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/fragment_completed_tasks.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3165562913907285" />
+        <entry key="app/src/main/res/layout/fragment_task_details_bottom_sheet.xml" value="0.3676923076923077" />
         <entry key="app/src/main/res/layout/icon_item.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/nav_body_drawer.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/nav_header_drawer.xml" value="0.21041666666666667" />

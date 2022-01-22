@@ -9,7 +9,7 @@
         android:id="@+id/nav_home_fragment"
         android:name="abdo.omer.notes.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_fragment_to_addTaskFragment"
             app:destination="@id/nav_add_task_fragment"
@@ -17,39 +17,61 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_nav_home_fragment_to_nav_completed_tasks_fragment"
-            app:destination="@id/nav_completed_tasks_fragment" />
+            app:destination="@id/nav_completed_tasks_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_nav_home_fragment_to_nav_calender_fragment"
-            app:destination="@id/nav_calender_fragment" />
+            app:destination="@id/nav_calender_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/nav_calender_fragment"
         android:name="abdo.omer.notes.ui.calender.CalenderFragment"
         android:label="fragment_calender"
-        tools:layout="@layout/fragment_calender" >
+        tools:layout="@layout/fragment_calender">
         <action
             android:id="@+id/action_nav_calender_fragment_to_nav_home_fragment"
-            app:destination="@id/nav_home_fragment" />
+            app:destination="@id/nav_home_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/nav_completed_tasks_fragment"
         android:name="abdo.omer.notes.ui.completedTask.CompletedTasksFragment"
         android:label="fragment_completed_tasks"
-        tools:layout="@layout/fragment_completed_tasks" >
+        tools:layout="@layout/fragment_completed_tasks">
         <action
             android:id="@+id/action_nav_completed_tasks_fragment_to_nav_home_fragment"
-            app:destination="@id/nav_home_fragment" />
+            app:destination="@id/nav_home_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/nav_add_task_fragment"
         android:name="abdo.omer.notes.ui.addTask.AddTaskFragment"
         android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" >
+        tools:layout="@layout/fragment_add_task">
         <action
             android:id="@+id/action_addTaskFragment_to_nav_home_fragment"
             app:destination="@id/nav_home_fragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <dialog
+        android:id="@+id/nav_task_details_bottom_sheet_fragment"
+        android:name="abdo.omer.notes.ui.common.TaskDetailsBottomSheetFragment"
+        android:label="TaskDetailsBottomSheetFragment"
+        tools:layout="@layout/fragment_task_details_bottom_sheet">
+        <argument
+            android:name="task"
+            app:argType="abdo.omer.notes.data.models.Task" />
+    </dialog>
+
+    <action
+        android:id="@+id/action_nav_sent_bottom_sheet_fragment"
+        app:destination="@id/nav_task_details_bottom_sheet_fragment" />
 
 </navigation>

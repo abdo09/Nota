@@ -21,11 +21,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/sixteen_dp"
+            android:layout_marginEnd="16dp"
             android:text="9:10"
             android:textSize="@dimen/twenty_sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
+            app:layout_constraintEnd_toStartOf="@+id/task_indicator"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/task_indicator"
@@ -38,6 +40,7 @@
             app:layout_constraintTop_toTopOf="@+id/time" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/eight_dp"

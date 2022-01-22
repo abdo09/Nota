@@ -57,6 +57,12 @@ class CalenderFragment : BaseSupportFragment() {
 
     }
 
+    override fun setOnclickLister() {
+        binding.btnBack.setOnClickListener {
+            navController.navigate(CalenderFragmentDirections.actionNavCalenderFragmentToNavHomeFragment())
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private fun getCalendarInstance() {
         val calendar = Calendar.getInstance()
@@ -82,7 +88,8 @@ class CalenderFragment : BaseSupportFragment() {
 
     private fun viewmodelObserver() {
         viewModel.taskList.observe(viewLifecycleOwner, {
-            calendarTaskAdapter.differ.submitList(it)
+            val notFinishedTasks = it.filter { task -> !task.taskIsDone }
+            calendarTaskAdapter.differ.submitList(notFinishedTasks)
         })
     }
 
