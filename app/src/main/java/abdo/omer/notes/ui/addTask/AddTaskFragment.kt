@@ -88,6 +88,8 @@ class AddTaskFragment : BaseSupportFragment() {
         val date = viewModel.task.day.dayInLong
         val time = viewModel.task.time
 
+        Timber.d("TIMEOFTASK = ${time.hours}\n${time.minute}")
+
         if (name.isEmpty()) binding.ipNameLayout.setBoarder(R.color.text_input_stroke_red_color)
         else viewModel.task.name = name
 
@@ -95,7 +97,7 @@ class AddTaskFragment : BaseSupportFragment() {
             descriptionDrawable(R.color.red_400, requireContext())
         else viewModel.task.description = description
 
-        return (name.isNotEmpty() && description.isNotEmpty() && date != 0L && time.isNotEmpty())
+        return (name.isNotEmpty() && description.isNotEmpty() && date != 0L && time.hours != null && time.minute != null)
     }
 
     @SuppressLint("SetTextI18n")
@@ -115,28 +117,33 @@ class AddTaskFragment : BaseSupportFragment() {
         timePicker.addOnPositiveButtonClickListener {
             val hour = timePicker.hour
             val minute = timePicker.minute
+            var time = ""
 
             if (hour <= 9) {
-                val time = "0$hour:$minute"
+                time = "0$hour:$minute"
                 binding.tvTime.text = time
-                viewModel.task.time = time
+                viewModel.task.time.hours = hour
+                viewModel.task.time.minute = minute
             }
             if (minute <= 9) {
-                val time = "$hour:0$minute"
+                time = "$hour:0$minute"
                 binding.tvTime.text = time
-                viewModel.task.time = time
+                viewModel.task.time.hours = hour
+                viewModel.task.time.minute = minute
             }
             if (hour <= 9 && minute <= 9) {
-                val time = "0$hour:0$minute"
+                time = "0$hour:0$minute"
                 binding.tvTime.text = time
-                viewModel.task.time = time
+                viewModel.task.time.hours = hour
+                viewModel.task.time.minute = minute
             }
             if (hour > 9 && minute > 9) {
-                val time = "$hour:$minute"
+                time = "$hour:$minute"
                 binding.tvTime.text = time
-                viewModel.task.time = time
+                viewModel.task.time.hours = hour
+                viewModel.task.time.minute = minute
             }
-
+            viewModel.task.time.hourAndMinute = time
         }
     }
 

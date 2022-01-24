@@ -4,12 +4,10 @@ import abdo.omer.notes.base.BaseSupportFragment
 import abdo.omer.notes.databinding.FragmentCalenderBinding
 import abdo.omer.notes.ui.calender.adapter.CalendarDateAdapter
 import abdo.omer.notes.ui.calender.adapter.CalendarTaskAdapter
-import abdo.omer.notes.ui.home.adapters.TasksAdapter
-import abdo.omer.notes.ui.home.adapters.TasksDoneAdapter
 import abdo.omer.notes.utlis.getAllDateOfMonth
 import abdo.omer.notes.utlis.getMonth
+import abdo.omer.notes.utlis.replaceDoubleQuote
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.Month
-import java.time.YearMonth
 import java.util.*
 
 class CalenderFragment : BaseSupportFragment() {
@@ -36,7 +30,7 @@ class CalenderFragment : BaseSupportFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         binding = FragmentCalenderBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -74,8 +68,6 @@ class CalenderFragment : BaseSupportFragment() {
 
         binding.fragmentTitle.text = "$month $year"
 
-        Timber.d("HOURS = $hour:$minute")
-
         val dateList = getAllDateOfMonth(year, month)
         calendarDateAdapter.differ.submitList(dateList)
     }
@@ -106,7 +98,18 @@ class CalenderFragment : BaseSupportFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun onClickListener() {
-        calendarDateAdapter.setOnCheckedListener {
+        calendarDateAdapter.setOnCheckedListener { date ->
+
+
+
+            val listOfTheDay =
+                viewModel.taskList.value
+                    ?.filter { !it.taskIsDone }
+                    ?.filter { it.day.dayOfTheMonth == date.dayOfMonth.toString() }
+                    ?.sortedBy { it.time.hourAndMinute?.replaceDoubleQuote()?.toInt() }
+
+            calendarTaskAdapter.differ.submitList(listOfTheDay)
+            calendarTaskAdapter.notifyDataSetChanged()
             calendarDateAdapter.notifyDataSetChanged()
         }
     }

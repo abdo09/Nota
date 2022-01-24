@@ -91,6 +91,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="@dimen/twenty_four_dp"
             android:textColor="#95989A"
+            android:gravity="center"
             android:textSize="@dimen/fourteen_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

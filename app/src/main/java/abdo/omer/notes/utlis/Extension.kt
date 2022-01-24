@@ -2,6 +2,7 @@ package abdo.omer.notes.utlis
 
 import abdo.omer.notes.R
 import abdo.omer.notes.data.models.TaskKey
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
@@ -304,4 +305,7 @@ fun descriptionDrawable(strokeColor: Int, context: Context): GradientDrawable {
         strokeColor = strokeColor,
         strokeWidth = 4
     )
+}
+fun String.replaceDoubleQuote(): String {
+    return this.replace(":".toRegex(), "")
 }

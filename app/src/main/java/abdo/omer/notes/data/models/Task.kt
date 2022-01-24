@@ -20,7 +20,8 @@ data class Task(
     var description: String = "",
     @Embedded
     var day: TaskDate = TaskDate(),
-    var time: String = "",
+    @Embedded
+    var time: TaskTime = TaskTime(),
     var taskIsDone: Boolean = false
 ): Parcelable {
     @Parcelize
@@ -28,6 +29,13 @@ data class Task(
         var dayOfTheMonth: String = "",
         var dayOfTheWeek: String = "",
         var dayInLong: Long = 0L
+    ): Parcelable
+
+    @Parcelize
+    data class TaskTime(
+        var hours: Int? = null,
+        var minute: Int? = null,
+        var hourAndMinute: String? = null,
     ): Parcelable
 
     companion object {

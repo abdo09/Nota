@@ -55,7 +55,8 @@ class TaskDetailsBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.taskName.text = args.task.name
         binding.taskDate.text = "${args.task.day.dayOfTheMonth} ${args.task.day.dayOfTheWeek}"
-        binding.taskTime.text = args.task.time
+        binding.taskTime.text = "${args.task.time.hours}:${args.task.time.minute}"
+        binding.taskDescription.text = args.task.description
     }
 
     private fun setTaskIcon() {

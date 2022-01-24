@@ -4,8 +4,7 @@ import abdo.omer.notes.R
 import abdo.omer.notes.data.models.Task
 import abdo.omer.notes.data.models.TaskKey
 import abdo.omer.notes.databinding.CalendarTasksItemBinding
-import abdo.omer.notes.utlis.getCustomDrawable
-import abdo.omer.notes.utlis.loadWithGlide
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -43,6 +42,7 @@ class CalendarTaskAdapter : RecyclerView.Adapter<CalendarTaskAdapter.CalendarTas
         return differ.currentList.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CalendarTaskViewHolder, position: Int) {
         val task = differ.currentList[position]
         holder.bind(task)
@@ -74,7 +74,24 @@ class CalendarTaskAdapter : RecyclerView.Adapter<CalendarTaskAdapter.CalendarTas
                     taskIndicator.setImageResource(R.drawable.ic_others_circle_indicator)
                 }
             }
-            time.text = task.time
+
+            val hour = task.time.hours!!
+            val minute = task.time.minute!!
+            var times = ""
+            if (hour <= 9) {
+                times = "0$hour:$minute"
+            }
+            if (minute <= 9) {
+                times = "$hour:0$minute"
+            }
+            if (hour <= 9 && minute <= 9) {
+                times = "0$hour:0$minute"
+            }
+            if (hour > 9 && minute > 9) {
+                times = "$hour:$minute"
+            }
+
+            time.text = times
             tvTaskTitle.text = task.name
 
         }

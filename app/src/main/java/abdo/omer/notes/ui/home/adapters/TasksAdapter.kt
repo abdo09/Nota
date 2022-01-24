@@ -84,9 +84,24 @@ class TasksAdapter : RecyclerView.Adapter<TasksAdapter.TasksViewHolder>() {
                     taskIndicator.setImageResource(R.drawable.ic_others_circle_indicator)
                 }
             }
+            val hour = task.time.hours!!
+            val minute = task.time.minute!!
+            var time = ""
+            if (hour <= 9) {
+                time = "0$hour:$minute"
+            }
+            if (minute <= 9) {
+                time = "$hour:0$minute"
+            }
+            if (hour <= 9 && minute <= 9) {
+                time = "0$hour:0$minute"
+            }
+            if (hour > 9 && minute > 9) {
+                time = "$hour:$minute"
+            }
             tvTaskTitle.text = task.name
             tvDay.text = "${task.day.dayOfTheMonth} ${task.day.dayOfTheWeek}"
-            tvTime.text = task.time
+            tvTime.text = time
             tvDay.visibility = View.VISIBLE
             tvTime.visibility = View.VISIBLE
             checkbox.visibility = View.INVISIBLE
