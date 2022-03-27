@@ -1,6 +1,7 @@
 package abdo.omer.notes.utlis
 
 import abdo.omer.notes.R
+import abdo.omer.notes.data.models.Task
 import abdo.omer.notes.data.models.TaskKey
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -27,6 +28,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -308,4 +310,23 @@ fun descriptionDrawable(strokeColor: Int, context: Context): GradientDrawable {
 }
 fun String.replaceDoubleQuote(): String {
     return this.replace(":".toRegex(), "")
+}
+
+fun handleTime(task: Task): String {
+    val hour = task.time.hours!!
+    val minute = task.time.minute!!
+    var times = ""
+    if (hour <= 9) {
+        times = "0$hour:$minute"
+    }
+    if (minute <= 9) {
+        times = "$hour:0$minute"
+    }
+    if (hour <= 9 && minute <= 9) {
+        times = "0$hour:0$minute"
+    }
+    if (hour > 9 && minute > 9) {
+        times = "$hour:$minute"
+    }
+    return times
 }

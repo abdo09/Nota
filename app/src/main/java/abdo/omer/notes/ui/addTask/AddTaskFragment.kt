@@ -16,13 +16,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.util.*
-
 class AddTaskFragment : BaseSupportFragment() {
 
     override val viewModel by viewModel<AddTaskViewModel>()
@@ -117,6 +117,8 @@ class AddTaskFragment : BaseSupportFragment() {
         timePicker.addOnPositiveButtonClickListener {
             val hour = timePicker.hour
             val minute = timePicker.minute
+
+            timePicker.inputMode
             var time = ""
 
             if (hour <= 9) {
@@ -148,6 +150,7 @@ class AddTaskFragment : BaseSupportFragment() {
     }
 
     private fun handleDatePicker() {
+
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select date")
@@ -165,16 +168,19 @@ class AddTaskFragment : BaseSupportFragment() {
             binding.tvDate.text = date
 
             viewModel.task.day.dayInLong = it
-            viewModel.task.day.dayOfTheWeek =
-                getMonth(calendar.get(Calendar.MONTH)).name.substring(0, 3)
+            viewModel.task.day.dayOfTheWeek = getMonth(calendar.get(Calendar.MONTH)).name.substring(0, 3)
             viewModel.task.day.dayOfTheMonth = calendar.get(Calendar.DAY_OF_MONTH).toString()
+            viewModel.task.day.month = getMonth(calendar.get(Calendar.MONTH)).toString()
+            viewModel.task.day.year = calendar.get(Calendar.YEAR).toString()
         }
     }
 
     private fun setupRecyclerView() {
         addTaskIconAdapter = AddTaskIconAdapter(requireContext())
+        addTaskIconAdapter.setHasStableIds(true)
         binding.iconsRecyclerView.apply {
             adapter = addTaskIconAdapter
+            this.hasFixedSize()
         }
         if (Constants().selectedIcon(requireContext())?.isEmpty() == true)
             Constants().selectedIcon(requireContext(), TaskKey.SHOPPING.name)

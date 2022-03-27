@@ -48,6 +48,9 @@ class CompletedTasksFragment : BaseSupportFragment() {
         binding.completedTasksRecyclerView.apply {
             adapter = completedTaskAdapter
         }
+        completedTaskAdapter.setOnItemClickListener { task ->
+            navController.navigate(CompletedTasksFragmentDirections.actionNavSentBottomSheetFragment(task = task))
+        }
     }
 
     private fun getTasksFromDB() {
@@ -57,10 +60,10 @@ class CompletedTasksFragment : BaseSupportFragment() {
     }
 
     private fun viewmodelObserver() {
-        viewModel.taskList.observe(viewLifecycleOwner, {
+        viewModel.taskList.observe(viewLifecycleOwner) {
             val finishedTasks = it.filter { task -> task.taskIsDone }
             completedTaskAdapter.differ.submitList(finishedTasks)
-        })
+        }
     }
 
 }

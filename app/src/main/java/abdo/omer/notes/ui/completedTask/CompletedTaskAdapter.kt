@@ -51,6 +51,11 @@ class CompletedTaskAdapter: RecyclerView.Adapter<CompletedTaskAdapter.CompleteTa
         holder.bind(task)
 
         holder.taskItemBinding.apply {
+
+            this.root.setOnClickListener {
+                onTaskClickListener?.let { it(task) }
+            }
+
             handleDrawables(this, task = task)
             tvTaskTitle.text = task.name
             tvDay.visibility = View.VISIBLE

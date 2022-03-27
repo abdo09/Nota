@@ -7,6 +7,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.time.Month
 
 @SuppressLint("ParcelCreator")
 @Parcelize
@@ -23,20 +24,22 @@ data class Task(
     @Embedded
     var time: TaskTime = TaskTime(),
     var taskIsDone: Boolean = false
-): Parcelable {
+) : Parcelable {
     @Parcelize
     data class TaskDate(
         var dayOfTheMonth: String = "",
         var dayOfTheWeek: String = "",
+        var year: String = "",
+        var month: String = "",
         var dayInLong: Long = 0L
-    ): Parcelable
+    ) : Parcelable
 
     @Parcelize
     data class TaskTime(
         var hours: Int? = null,
         var minute: Int? = null,
         var hourAndMinute: String? = null,
-    ): Parcelable
+    ) : Parcelable
 
     companion object {
         const val TABLE_NAME = "task_table"

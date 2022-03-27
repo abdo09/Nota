@@ -5,9 +5,9 @@
     tools:context=".ui.calender.CalenderFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/main_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_back"
@@ -31,7 +31,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/fragment_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/fragment_title"
@@ -52,6 +53,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/eight_dp"
             android:orientation="horizontal"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,9 +66,9 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/calendar_recycler"
             tools:listitem="@layout/calendar_tasks_item" />
 

@@ -53,9 +53,25 @@ class TaskDetailsBottomSheetFragment : BottomSheetDialogFragment() {
 
         setTaskIcon()
 
+        val hour = args.task.time.hours!!
+        val minute = args.task.time.minute!!
+        var time = ""
+        if (hour <= 9) {
+            time = "0$hour:$minute"
+        }
+        if (minute <= 9) {
+            time = "$hour:0$minute"
+        }
+        if (hour <= 9 && minute <= 9) {
+            time = "0$hour:0$minute"
+        }
+        if (hour > 9 && minute > 9) {
+            time = "$hour:$minute"
+        }
+
         binding.taskName.text = args.task.name
         binding.taskDate.text = "${args.task.day.dayOfTheMonth} ${args.task.day.dayOfTheWeek}"
-        binding.taskTime.text = "${args.task.time.hours}:${args.task.time.minute}"
+        binding.taskTime.text = time
         binding.taskDescription.text = args.task.description
     }
 

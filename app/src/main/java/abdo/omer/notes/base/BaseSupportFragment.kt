@@ -58,37 +58,37 @@ abstract class BaseSupportFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkNetworkConnectivity(requireContext())
+        //checkNetworkConnectivity(requireContext())
 
-        viewModel.showLoading.observe(viewLifecycleOwner, { showLoading ->
+        viewModel.showLoading.observe(viewLifecycleOwner) { showLoading ->
             if (activity != null && !requireActivity().isFinishing) {
                 if (showLoading)
                     view.postDelayed({ progressDialog.show() }, 100)
                 else
                     view.postDelayed({ progressDialog.dismiss() }, 100)
             }
-        })
+        }
 
-        viewModel.showInfo.observe(viewLifecycleOwner, { infoMessage ->
+        viewModel.showInfo.observe(viewLifecycleOwner) { infoMessage ->
             if (infoMessage is String)
                 cookieBarConfig.showDefaultInfoCookie(infoMessage)
             else
                 context?.resources?.getString(infoMessage as Int)?.let {
                     cookieBarConfig.showDefaultInfoCookie(it)
                 }
-        })
+        }
 
 
-        viewModel.showSuccess.observe(viewLifecycleOwner, { infoMessage ->
+        viewModel.showSuccess.observe(viewLifecycleOwner) { infoMessage ->
             if (infoMessage is String)
                 cookieBarConfig.showDefaultSuccessCookie(infoMessage)
             else
                 context?.resources?.getString(infoMessage as Int)?.let {
                     cookieBarConfig.showDefaultSuccessCookie(it)
                 }
-        })
+        }
 
-        viewModel.showError.observe(viewLifecycleOwner, { showError ->
+        viewModel.showError.observe(viewLifecycleOwner) { showError ->
             cookieBarConfig.runCatching {
                 viewModel.showLoading.postValue(false)
                 if (showError is String) {
@@ -112,7 +112,7 @@ abstract class BaseSupportFragment: Fragment() {
                     }
             }
 
-        })
+        }
 
         onLazyInitView(savedInstanceState)
 

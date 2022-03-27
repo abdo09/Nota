@@ -1,27 +1,24 @@
 package abdo.omer.notes.ui.calender.adapter
 
 import abdo.omer.notes.R
-import abdo.omer.notes.data.models.Task
+import abdo.omer.notes.data.models.DateModel
 import abdo.omer.notes.databinding.CalendarItemBinding
-import abdo.omer.notes.databinding.TasksItemBinding
-import abdo.omer.notes.ui.home.adapters.TasksAdapter
+import abdo.omer.notes.ui.calender.CalendarViewModel
 import abdo.omer.notes.utlis.Constants
-import abdo.omer.notes.utlis.Constants.Companion.SELECTED_DATE
 import abdo.omer.notes.utlis.getCustomColor
 import abdo.omer.notes.utlis.getCustomDrawable
 import android.content.Context
-import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.setPadding
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import timber.log.Timber
 import java.time.LocalDate
+import java.time.Month
 
-class CalendarDateAdapter(val _context: Context) : RecyclerView.Adapter<CalendarDateAdapter.CalendarDateViewHolder>() {
+class CalendarDateAdapter(private val _context: Context) :
+    RecyclerView.Adapter<CalendarDateAdapter.CalendarDateViewHolder>() {
 
     inner class CalendarDateViewHolder(val calendarItemBinding: CalendarItemBinding) :
         RecyclerView.ViewHolder(calendarItemBinding.root) {
@@ -32,11 +29,11 @@ class CalendarDateAdapter(val _context: Context) : RecyclerView.Adapter<Calendar
 
     private val differCallback = object : DiffUtil.ItemCallback<LocalDate>() {
         override fun areItemsTheSame(oldItem: LocalDate, newItem: LocalDate): Boolean {
-            return oldItem == newItem
+            return oldItem.dayOfMonth == newItem.dayOfMonth
         }
 
         override fun areContentsTheSame(oldItem: LocalDate, newItem: LocalDate): Boolean {
-            return oldItem == newItem
+            return oldItem.dayOfMonth == newItem.dayOfMonth
         }
     }
 
@@ -55,29 +52,44 @@ class CalendarDateAdapter(val _context: Context) : RecyclerView.Adapter<Calendar
     private var onItemCheckedListener: ((LocalDate) -> Unit)? = null
 
     override fun onBindViewHolder(holder: CalendarDateViewHolder, position: Int) {
-        val localDate = differ.currentList[position]
-        holder.bind(localDate)
-
-
+        val localDateItem = differ.currentList[position]
+        holder.bind(localDateItem)
 
         holder.calendarItemBinding.apply {
-            dayOfTheMonth.text = localDate.dayOfMonth.toString()
-            dayOfTheWeek.text = localDate.dayOfWeek.name.substring(0,3)
+            val selectedDate = Constants().selectedDatePosition(_context) + 1
+            dayOfTheMonth.text = localDateItem.dayOfMonth.toString()
+            dayOfTheWeek.text = localDateItem.dayOfWeek.name.substring(0, 3)
 
             root.setOnClickListener {
-                Constants().selectedDate(_context, localDate.dayOfMonth)
-                onItemCheckedListener?.let { it(localDate) }
+                val date = DateModel(
+                    year = localDateItem.year,
+                    month = localDateItem.month,
+                    dayOfMonth = localDateItem.dayOfMonth
+                )
+                Constants().setDate(_context, date)
+                Constants().selectedDatePosition(_context, position)
+                onItemCheckedListener?.let { it(localDateItem) }
+                handleItemBackgroundColor(holder.calendarItemBinding, selectedDate, localDateItem)
             }
 
-            val selectedDate = Constants().selectedDate(_context)
-            if (selectedDate == localDate.dayOfMonth){
+            handleItemBackgroundColor(holder.calendarItemBinding, selectedDate, localDateItem)
+        }
+    }
+
+    private fun handleItemBackgroundColor(
+        calendarItemBinding: CalendarItemBinding,
+        selectedDate: Int,
+        localDate: LocalDate
+    ) {
+        calendarItemBinding.apply {
+            if (selectedDate == localDate.dayOfMonth) {
                 root.background = _context.getCustomDrawable(R.drawable.gradient_blue)
-                holder.calendarItemBinding.dayOfTheMonth.setTextColor(_context.getCustomColor(R.color.white))
-                holder.calendarItemBinding.dayOfTheWeek.setTextColor(_context.getCustomColor(R.color.white))
-            } else{
+                dayOfTheMonth.setTextColor(_context.getCustomColor(R.color.white))
+                dayOfTheWeek.setTextColor(_context.getCustomColor(R.color.white))
+            } else {
                 root.background = _context.getCustomDrawable(R.color.white)
-                holder.calendarItemBinding.dayOfTheMonth.setTextColor(_context.getCustomColor(R.color.black))
-                holder.calendarItemBinding.dayOfTheWeek.setTextColor(_context.getCustomColor(R.color.black))
+                dayOfTheMonth.setTextColor(_context.getCustomColor(R.color.black))
+                dayOfTheWeek.setTextColor(_context.getCustomColor(R.color.black))
             }
         }
     }

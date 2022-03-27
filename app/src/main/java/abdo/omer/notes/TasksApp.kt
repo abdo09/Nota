@@ -3,10 +3,7 @@ package abdo.omer.notes
 import abdo.omer.notes.di.appModules
 import abdo.omer.notes.di.dataModule
 import abdo.omer.notes.di.firebaseModule
-import abdo.omer.notes.di.networkModule
-import abdo.omer.notes.utlis.CrashReportingTree
 import android.content.Context
-import androidx.multidex.BuildConfig.FLAVOR
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
@@ -59,7 +56,7 @@ class TasksApp: MultiDexApplication() {
             // load properties from assets/koin.properties file
             androidFileProperties()
 
-            modules(listOf(dataModule, firebaseModule, appModules, networkModule))
+            modules(listOf(dataModule, firebaseModule, appModules))
         }
     }
 

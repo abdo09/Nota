@@ -50,13 +50,13 @@ class HomeFragment : BaseSupportFragment() {
             getTasksFromDB()
         }
 
-        viewModel.taskList.observe(viewLifecycleOwner, {
-            if(!it.isNullOrEmpty()){
+        viewModel.taskList.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
                 val notFinishedTasks = it.filter { task -> !task.taskIsDone }
                 tasksAdapter.differ.submitList(notFinishedTasks)
                 tasksDoneAdapter.differ.submitList(notFinishedTasks)
             }
-        })
+        }
     }
 
 

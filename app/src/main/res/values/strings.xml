@@ -21,4 +21,6 @@
     <string name="time">Time</string>
     <string name="pref_selected_icon">pref_selected_icon</string>
     <string name="done">Done</string>
+    <string name="pref_date_model">pref_date_model</string>
+    <string name="pref_selected_date_position">pref_selected_date_position</string>
 </resources>

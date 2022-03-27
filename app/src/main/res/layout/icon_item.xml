@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type = "android.view.View"/>
+
+        <variable
+            name="taskKey"
+            type="abdo.omer.notes.data.models.TaskKey" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
@@ -14,7 +21,7 @@
             android:layout_width="@dimen/ten_dp"
             android:layout_height="@dimen/ten_dp"
             android:layout_margin="@dimen/four_dp"
-            android:src="@drawable/ic_shopping_circle_indicator"
+            handleTaskIconIndicator="@{taskKey.name()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/icon_indicator"
             app:layout_constraintTop_toBottomOf="@id/icon_indicator"
-            app:srcCompat="@drawable/ic_shopping" />
+            handleTaskIcon="@{taskKey.name()}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

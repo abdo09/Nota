@@ -1,6 +1,7 @@
 package abdo.omer.notes.utlis
 
 import abdo.omer.notes.R
+import abdo.omer.notes.data.models.DateModel
 import abdo.omer.notes.di.getSharedPrefs
 import android.annotation.SuppressLint
 import android.content.Context
@@ -41,25 +42,16 @@ class Constants {
         return getSharedPrefs(context).getString(context.getString(R.string.pref_access_token), "")
     }
 
-
-    fun setAccessToken(context: Context, accessToken: String?) {
-        getSharedPrefs(context).edit().putString(context.getString(R.string.pref_access_token), accessToken).apply()
-    }
-
     fun getRefreshToken(context: Context): String? {
         return getSharedPrefs(context).getString(context.getString(R.string.pref_refresh_token), "")
     }
 
-    fun setRefreshToken(context: Context, refreshToken: String?) {
-        getSharedPrefs(context).edit().putString(context.getString(R.string.pref_refresh_token), refreshToken).apply()
+    fun selectedDatePosition(context: Context): Int {
+        return getSharedPrefs(context).getInt(context.getString(R.string.pref_selected_date_position), -1)
     }
 
-    fun selectedDate(context: Context): Int {
-        return getSharedPrefs(context).getInt(context.getString(R.string.pref_selected_date), -1)
-    }
-
-    fun selectedDate(context: Context, selectedDate: Int?) {
-        getSharedPrefs(context).edit().putInt(context.getString(R.string.pref_selected_date), selectedDate?: -1).apply()
+    fun selectedDatePosition(context: Context, selectedDatePosition: Int?) {
+        getSharedPrefs(context).edit().putInt(context.getString(R.string.pref_selected_date_position), selectedDatePosition?: -1).apply()
     }
 
     fun selectedIcon(context: Context): String? {
@@ -68,6 +60,19 @@ class Constants {
 
     fun selectedIcon(context: Context, selectedDate: String?) {
         getSharedPrefs(context).edit().putString(context.getString(R.string.pref_selected_icon), selectedDate?: "").apply()
+    }
+
+    fun setDate(context: Context, dateModel: DateModel) {
+        val gson = Gson()
+        val json = gson.toJson(dateModel)
+        getSharedPrefs(context).edit().putString(context.getString(R.string.pref_date_model), json).apply()
+    }
+
+    fun getDate(context: Context): DateModel? {
+        val gson = Gson()
+        val json = getSharedPrefs(context).getString(context.getString(R.string.pref_date_model), null)
+        val type: Type = object : TypeToken<DateModel?>() {}.type
+        return gson.fromJson<Any>(json, type) as DateModel?
     }
 
     companion object{

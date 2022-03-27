@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class TaskDetailsBottomSheetFragment : BottomSheetDialogFragment() {
+class SubTasksBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val args by navArgs<TaskDetailsBottomSheetFragmentArgs>()
     private lateinit var binding: FragmentTaskDetailsBottomSheetBinding

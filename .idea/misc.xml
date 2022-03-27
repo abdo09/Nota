@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.34814814814814815" />
+        <entry key="../../Library/Android/sdk/platforms/android-31/android.jar!/res/layout/splash_screen_view.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/drawable/b2b_gradient_orange.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/drawable/bottom_sheet_dialog.xml" value="0.3175925925925926" />
@@ -48,12 +50,13 @@
         <entry key="app/src/main/res/layout/fragment_completed_tasks.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3165562913907285" />
         <entry key="app/src/main/res/layout/fragment_task_details_bottom_sheet.xml" value="0.3676923076923077" />
-        <entry key="app/src/main/res/layout/icon_item.xml" value="0.3734375" />
+        <entry key="app/src/main/res/layout/icon_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/nav_body_drawer.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/nav_header_drawer.xml" value="0.21041666666666667" />
         <entry key="app/src/main/res/layout/prgress_dialog_layout.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/tasks_item.xml" value="0.5" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.38958333333333334" />
+        <entry key="app/src/main/res/xml/data_extraction_rules.xml" value="0.3734375" />
       </map>
     </option>
   </component>
