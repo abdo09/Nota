@@ -8,22 +8,13 @@ import abdo.omer.notes.data.repository.roomRepository.TaskRoomRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeFragmentViewModel(val taskRoomRepository: TaskRoomRepository): BaseViewModel() {
+class HomeFragmentViewModel(private val taskRoomRepository: TaskRoomRepository): BaseViewModel() {
 
     var taskList = SingleLiveEvent<List<Task>>()
-    var notFinishedTasks = arrayListOf<Task>()
-    var checkedTasksIndexes = arrayListOf<Task>()
-    var finishedTasks = arrayListOf<Task>()
     var isDone = false
 
     suspend fun upsertTask(task: Task){
         taskRoomRepository.upsertTask(task)
-    }
-
-    suspend fun upsertAllTasks(tasks: List<Task>){
-        launch(Dispatchers.IO) {
-            taskRoomRepository.upsertAllTasks(tasks)
-        }
     }
 
     fun getAllTasks(): List<Task>{
