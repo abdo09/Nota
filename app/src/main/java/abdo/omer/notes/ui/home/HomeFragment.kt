@@ -5,6 +5,8 @@ import abdo.omer.notes.data.models.Task
 import abdo.omer.notes.databinding.FragmentHomeBinding
 import abdo.omer.notes.ui.home.adapters.TasksAdapter
 import abdo.omer.notes.ui.home.adapters.TasksDoneAdapter
+import abdo.omer.notes.utlis.fadeIn
+import abdo.omer.notes.utlis.fadeOut
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -26,16 +28,17 @@ class HomeFragment : BaseSupportFragment() {
 
     private lateinit var tasksAdapter: TasksAdapter
     private lateinit var tasksDoneAdapter: TasksDoneAdapter
-    private lateinit var binding: FragmentHomeBinding
+
+    private var binding: FragmentHomeBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        return binding.root
+        return binding?.root
     }
 
 
@@ -67,35 +70,35 @@ class HomeFragment : BaseSupportFragment() {
     private fun setupRecyclerView() {
         tasksAdapter = TasksAdapter()
         tasksDoneAdapter = TasksDoneAdapter()
-        binding.tasksRecyclerView.apply {
+        binding?.tasksRecyclerView?.apply {
             adapter = tasksAdapter
         }
-        binding.tasksRecyclerViewDone.apply {
+        binding?.tasksRecyclerViewDone?.apply {
             adapter = tasksDoneAdapter
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun onClick() {
-        binding.btnFinishTasks.setOnClickListener {
+        binding?.btnFinishTasks?.setOnClickListener {
             viewModel.isDone = !viewModel.isDone
             if (viewModel.isDone) {
-                binding.tasksRecyclerView.visibility = View.GONE
-                binding.tasksRecyclerViewDone.visibility = View.VISIBLE
-                binding.doAndUndoChangesLayout.visibility = View.VISIBLE
-                binding.calendarAddTaskLayout.visibility = View.GONE
+                binding?.tasksRecyclerView?.fadeOut(400, View.GONE)
+                binding?.tasksRecyclerViewDone?.fadeIn(400)
+                binding?.doAndUndoChangesLayout?.fadeIn(400)
+                binding?.calendarAddTaskLayout?.fadeOut(400, View.GONE)
             }
         }
 
-        binding.btnOpenCalendar.setOnClickListener {
+        binding?.btnOpenCalendar?.setOnClickListener {
             navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToNavCalenderFragment())
         }
 
-        binding.btnCompletedTasks.setOnClickListener {
+        binding?.btnCompletedTasks?.setOnClickListener {
             navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToNavCompletedTasksFragment())
         }
 
-        binding.btnDoChanges.setOnClickListener {
+        binding?.btnDoChanges?.setOnClickListener {
             val notFinishedTasks = tasksDoneAdapter.differ.currentList.filter { task -> !task.taskIsDone }
             val finishedTasks = tasksDoneAdapter.differ.currentList.filter { task -> task.taskIsDone }
             tasksDoneAdapter.differ.submitList(notFinishedTasks)
@@ -109,7 +112,7 @@ class HomeFragment : BaseSupportFragment() {
             handleButtonsVisibility()
         }
 
-        binding.btnUndoChanges.setOnClickListener {
+        binding?.btnUndoChanges?.setOnClickListener {
             tasksDoneAdapter.differ.currentList.forEach {
                 if (it.taskIsDone) it.taskIsDone = false
             }
@@ -119,27 +122,34 @@ class HomeFragment : BaseSupportFragment() {
             handleButtonsVisibility()
         }
 
-        binding.btnNavAddTask.setOnClickListener {
+        binding?.btnNavAddTask?.setOnClickListener {
             navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToAddTaskFragment())
         }
 
-        binding.btnAddTask.setOnClickListener {
+        binding?.btnAddTask?.setOnClickListener {
             navController.navigate(HomeFragmentDirections.actionNavHomeFragmentToAddTaskFragment())
         }
 
         tasksAdapter.setOnItemClickListener { task ->
             navController.navigate(HomeFragmentDirections.actionNavSentBottomSheetFragment(task = task))
         }
-
+        tasksDoneAdapter.setOnCheckedListener{}
     }
 
     private fun handleButtonsVisibility() {
         viewModel.isDone = !viewModel.isDone
         if (!viewModel.isDone) {
-            binding.tasksRecyclerView.visibility = View.VISIBLE
-            binding.tasksRecyclerViewDone.visibility = View.GONE
-            binding.calendarAddTaskLayout.visibility = View.VISIBLE
-            binding.doAndUndoChangesLayout.visibility = View.GONE
+            binding?.tasksRecyclerView?.fadeIn(400)
+            binding?.tasksRecyclerViewDone?.fadeOut(400, View.GONE)
+            binding?.calendarAddTaskLayout?.fadeIn(400)
+            binding?.doAndUndoChangesLayout?.fadeOut(400, View.GONE)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.tasksRecyclerViewDone?.adapter = null
+        binding?.tasksRecyclerView?.adapter = null
+        binding = null
     }
 }

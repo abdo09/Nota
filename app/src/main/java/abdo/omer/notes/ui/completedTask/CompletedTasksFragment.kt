@@ -14,17 +14,17 @@ class CompletedTasksFragment : BaseSupportFragment() {
 
     override val viewModel by viewModel<CompletedTaskViewModel>()
 
-    private lateinit var binding: FragmentCompletedTasksBinding
+    private var binding: FragmentCompletedTasksBinding? = null
     private lateinit var completedTaskAdapter: CompletedTaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentCompletedTasksBinding.inflate(inflater, container, false)
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,14 +38,14 @@ class CompletedTasksFragment : BaseSupportFragment() {
     }
 
     override fun setOnclickLister() {
-        binding.btnBack.setOnClickListener {
+        binding?.btnBack?.setOnClickListener {
             navController.navigate(CompletedTasksFragmentDirections.actionNavCompletedTasksFragmentToNavHomeFragment())
         }
     }
 
     private fun setupRecyclerView() {
         completedTaskAdapter = CompletedTaskAdapter()
-        binding.completedTasksRecyclerView.apply {
+        binding?.completedTasksRecyclerView?.apply {
             adapter = completedTaskAdapter
         }
         completedTaskAdapter.setOnItemClickListener { task ->
@@ -64,6 +64,12 @@ class CompletedTasksFragment : BaseSupportFragment() {
             val finishedTasks = it.filter { task -> task.taskIsDone }
             completedTaskAdapter.differ.submitList(finishedTasks)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.completedTasksRecyclerView?.adapter = null
+        binding = null
     }
 
 }

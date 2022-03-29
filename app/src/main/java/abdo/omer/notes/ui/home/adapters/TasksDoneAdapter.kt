@@ -2,7 +2,6 @@ package abdo.omer.notes.ui.home.adapters
 
 import abdo.omer.notes.R
 import abdo.omer.notes.data.models.Task
-import abdo.omer.notes.data.models.TaskKey
 import abdo.omer.notes.databinding.TasksItemBinding
 import abdo.omer.notes.utlis.drawable
 import abdo.omer.notes.utlis.getCustomDrawable
@@ -12,6 +11,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +20,9 @@ class TasksDoneAdapter : RecyclerView.Adapter<TasksDoneAdapter.TasksViewHolder>(
 
     inner class TasksViewHolder(val taskItemBinding: TasksItemBinding) :
         RecyclerView.ViewHolder(taskItemBinding.root) {
-        fun bind(task: Task) {
+        fun bind(task: Task, tasksDoneAdapter: TasksDoneAdapter) {
             taskItemBinding.task = task
+            taskItemBinding.callBack = tasksDoneAdapter
         }
     }
 
@@ -47,72 +48,39 @@ class TasksDoneAdapter : RecyclerView.Adapter<TasksDoneAdapter.TasksViewHolder>(
         return differ.currentList.size
     }
 
-    private var onItemCheckedListener: ((Task) -> Unit)? = null
+    var onItemCheckedListener: ((Task) -> Unit)? = null
 
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
         val task = differ.currentList[position]
-        holder.bind(task)
+        holder.bind(task, this)
 
         holder.taskItemBinding.apply {
-            when (task.key) {
-                TaskKey.SHOPPING -> {
-                    taskIcon.setImageResource(R.drawable.ic_shopping)
-                    taskIndicator.setImageResource(R.drawable.ic_shopping_circle_indicator)
-                }
-                TaskKey.SPORTS -> {
-                    taskIcon.setImageResource(R.drawable.ic_sports)
-                    taskIndicator.setImageResource(R.drawable.ic_sports_circle_indicator)
-                }
-                TaskKey.GOTO -> {
-                    taskIcon.setImageResource(R.drawable.ic_go_to)
-                    taskIndicator.setImageResource(R.drawable.ic_go_to_circle_indicator)
-                }
-                TaskKey.EVENT -> {
-                    taskIcon.setImageResource(R.drawable.ic_event)
-                    taskIndicator.setImageResource(R.drawable.ic_event_circle_indicator)
-                }
-                TaskKey.GYM -> {
-                    taskIcon.setImageResource(R.drawable.ic_gym)
-                    taskIndicator.setImageResource(R.drawable.ic_gym_circle_indicator)
-                }
-                TaskKey.OTHERS -> {
-                    taskIcon.setImageResource(R.drawable.ic_others)
-                    taskIndicator.setImageResource(R.drawable.ic_others_circle_indicator)
-                }
-            }
-
-            tvTaskTitle.text = task.name
 
             tvDay.visibility = View.INVISIBLE
             tvTime.visibility = View.INVISIBLE
-            checkbox.visibility = View.VISIBLE
+            checkboxDone.visibility = View.VISIBLE
 
-            checkbox.apply {
+            checkboxDone.apply {
                 background = drawable(context,"#FFFFFF", 10, 10, 10, 10)
                 elevation = 8f
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     outlineAmbientShadowColor = Color.parseColor("#fe1e9a")
                     outlineSpotShadowColor = Color.parseColor("#fe1e9a")
                 }
-
-                if (!task.taskIsDone) {
-                    this.setImageResource(0)
-                } else {
-                    this.setImageResource(R.drawable.ic_mark_done)
-                }
-
-                setOnClickListener {
-
-                    if (task.taskIsDone) {
-                        task.taskIsDone = !task.taskIsDone
-                        this.setImageResource(0)
-                    } else {
-                        task.taskIsDone = !task.taskIsDone
-                        this.setImageResource(R.drawable.ic_mark_done)
-                    }
-                }
             }
         }
+    }
+
+    fun onCheckBoxClick(view: View, task: Task) {
+        val checkBox = view.findViewById<ImageView>(R.id.checkbox_done)
+        if (task.taskIsDone) {
+            task.taskIsDone = !task.taskIsDone
+            checkBox.setImageResource(0)
+        } else {
+            task.taskIsDone = !task.taskIsDone
+            checkBox.setImageResource(R.drawable.ic_mark_done)
+        }
+        onItemCheckedListener?.let { it(task) }
     }
 
     fun setOnCheckedListener(listener: (Task) -> Unit) {

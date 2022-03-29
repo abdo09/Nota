@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 abstract class BaseSupportFragment: Fragment() {
 
@@ -34,7 +35,7 @@ abstract class BaseSupportFragment: Fragment() {
     abstract val viewModel: BaseViewModel
 
     //full screen loading dialog
-    val progressDialog by lazy { ProgressDialog(activity) }
+    val progressDialog by lazy { ProgressDialog(requireActivity()) }
 
     //basic navigation controller for fragments within the app
     val navController by lazy { findNavController() }
@@ -171,6 +172,11 @@ abstract class BaseSupportFragment: Fragment() {
 
     open fun viewModelObserver(){
 
+    }
+
+    override fun onDestroyView() {
+        Timber.d("HGTRFGHYTRFb ${cookieBarConfig.activity.isDestroyed}")
+        super.onDestroyView()
     }
 
     override fun onDestroy() {

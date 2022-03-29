@@ -55,48 +55,6 @@ class CompletedTaskAdapter: RecyclerView.Adapter<CompletedTaskAdapter.CompleteTa
             this.root.setOnClickListener {
                 onTaskClickListener?.let { it(task) }
             }
-
-            handleDrawables(this, task = task)
-            tvTaskTitle.text = task.name
-            tvDay.visibility = View.VISIBLE
-            tvTime.visibility = View.VISIBLE
-            checkbox.visibility = View.INVISIBLE
-
-        }
-    }
-
-    private fun handleDrawables(binding: CompeletedTasksItemBinding, task: Task) {
-        when(task.key){
-            TaskKey.SHOPPING -> {
-                binding.taskIcon.context.apply { loadWithGlide(binding.taskIcon, this.getCustomDrawable(R.drawable.ic_shopping)) }
-                binding.taskIndicator.context.apply { loadWithGlide(binding.taskIndicator, this.getCustomDrawable(
-                    R.drawable.shopping_done_indicator)) }
-            }
-            TaskKey.SPORTS -> {
-                binding.taskIcon.context.apply { loadWithGlide(binding.taskIcon, this.getCustomDrawable(R.drawable.ic_sports)) }
-                binding.taskIndicator.context.apply { loadWithGlide(binding.taskIndicator, this.getCustomDrawable(
-                    R.drawable.sports_done_indicator)) }
-            }
-            TaskKey.GOTO -> {
-                binding.taskIcon.context.apply { loadWithGlide(binding.taskIcon, this.getCustomDrawable(R.drawable.ic_go_to)) }
-                binding.taskIndicator.context.apply { loadWithGlide(binding.taskIndicator, this.getCustomDrawable(
-                    R.drawable.go_to_done_indicator)) }
-            }
-            TaskKey.EVENT -> {
-                binding.taskIcon.context.apply { loadWithGlide(binding.taskIcon, this.getCustomDrawable(R.drawable.ic_event)) }
-                binding.taskIndicator.context.apply { loadWithGlide(binding.taskIndicator, this.getCustomDrawable(
-                    R.drawable.event_done_indicator)) }
-            }
-            TaskKey.GYM -> {
-                binding. taskIcon.context.apply { loadWithGlide(binding.taskIcon, this.getCustomDrawable(R.drawable.ic_gym)) }
-                binding.taskIndicator.context.apply { loadWithGlide(binding.taskIndicator, this.getCustomDrawable(
-                    R.drawable.gym_done_indicator)) }
-            }
-            TaskKey.OTHERS -> {
-                binding.taskIcon.context.apply { loadWithGlide(binding.taskIcon, this.getCustomDrawable(R.drawable.ic_others)) }
-                binding.taskIndicator.context.apply { loadWithGlide(binding.taskIndicator, this.getCustomDrawable(
-                    R.drawable.others_done_indicator)) }
-            }
         }
     }
 

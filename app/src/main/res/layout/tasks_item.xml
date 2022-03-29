@@ -4,17 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="task"
             type="abdo.omer.notes.data.models.Task" />
+
+        <variable
+            name="callBack"
+            type="abdo.omer.notes.ui.home.adapters.TasksDoneAdapter" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/ten_dp"
         android:layout_margin="@dimen/eight_dp"
+        android:elevation="@dimen/ten_dp"
         app:cardCornerRadius="@dimen/eight_dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +30,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/task_indicator"
+                handledTaskIndicator="@{task}"
                 android:layout_width="@dimen/ten_dp"
                 android:layout_height="@dimen/ten_dp"
                 android:layout_margin="@dimen/eight_dp"
@@ -32,6 +40,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/task_icon"
+                handledTaskIcon="@{task}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginBottom="@dimen/sixteen_dp"
@@ -49,7 +58,7 @@
                 android:paddingStart="@dimen/eight_dp"
                 android:paddingEnd="@dimen/eight_dp"
                 android:singleLine="true"
-                android:text="Shopping list, food for the weekfsfsfsfsffsfsf"
+                android:text="@{task.name}"
                 android:textColor="#181743"
                 android:textSize="@dimen/sixteen_sp"
                 app:layout_constraintBottom_toBottomOf="@+id/task_icon"
@@ -64,7 +73,7 @@
                 android:layout_marginEnd="@dimen/eight_dp"
                 android:layout_marginBottom="@dimen/four_dp"
                 android:gravity="center"
-                android:text="18 JUL"
+                android:text="@{task.day.dayOfTheMonth + ' ' + task.day.month.substring(0, 3)}"
                 android:textColor="#181743"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/tv_time"
@@ -76,6 +85,7 @@
 
             <TextView
                 android:id="@+id/tv_time"
+                handledTaskTime="@{task}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/four_dp"
@@ -83,7 +93,6 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/four_dp"
                 android:paddingEnd="@dimen/four_dp"
-                android:text="10:26"
                 android:textColor="#73748E"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_task_title"
@@ -93,12 +102,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_day" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/checkbox"
+                android:id="@+id/checkbox_done"
+                handleCheckBox="@{task}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="@dimen/eight_dp"
+                android:onClick="@{(view)-> callBack.onCheckBoxClick(view, task)}"
                 android:padding="@dimen/eight_dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_task_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_task_title"

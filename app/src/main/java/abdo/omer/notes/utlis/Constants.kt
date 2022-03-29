@@ -14,38 +14,6 @@ import java.time.LocalDate
 
 class Constants {
 
-    fun firstTime(context: Context): Boolean {
-        return getSharedPrefs(context).getBoolean(context.getString(R.string.pref_first_time), false)
-    }
-
-    fun firstTime(context: Context, isFirstTime: Boolean) {
-        getSharedPrefs(context).edit().putBoolean(context.getString(R.string.pref_first_time), isFirstTime).apply()
-    }
-
-    fun getCurrentLanguage(context: Context): String? {
-        return getSharedPrefs(context).getString(context.getString(R.string.pref_language), "en")
-    }
-
-    fun setCurrentLanguage(context: Context, lang: String) {
-        getSharedPrefs(context).edit().putString(context.getString(R.string.pref_language), lang).apply()
-    }
-
-    fun getUid(context: Context): String? {
-        return getSharedPrefs(context).getString(context.getString(R.string.pref_uid), "")
-    }
-
-    fun setUid(context: Context, uid: String) {
-        getSharedPrefs(context).edit().putString(context.getString(R.string.pref_uid), uid).apply()
-    }
-
-    fun getAccessToken(context: Context): String? {
-        return getSharedPrefs(context).getString(context.getString(R.string.pref_access_token), "")
-    }
-
-    fun getRefreshToken(context: Context): String? {
-        return getSharedPrefs(context).getString(context.getString(R.string.pref_refresh_token), "")
-    }
-
     fun selectedDatePosition(context: Context): Int {
         return getSharedPrefs(context).getInt(context.getString(R.string.pref_selected_date_position), -1)
     }

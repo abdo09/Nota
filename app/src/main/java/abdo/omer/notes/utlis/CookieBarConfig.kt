@@ -2,10 +2,11 @@ package abdo.omer.notes.utlis
 
 import abdo.omer.notes.R
 import android.app.Activity
+import androidx.fragment.app.FragmentActivity
 import com.andrognito.flashbar.Flashbar
 import com.andrognito.flashbar.anim.FlashAnim
 
-class CookieBarConfig(val activity: Activity) {
+class CookieBarConfig(val activity: FragmentActivity) {
     private val enterAnimation = FlashAnim.with(activity)
             .animateBar()
             .duration(750)

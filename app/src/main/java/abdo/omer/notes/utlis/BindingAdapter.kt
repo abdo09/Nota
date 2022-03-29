@@ -4,6 +4,7 @@ import abdo.omer.notes.R
 import abdo.omer.notes.data.models.Task
 import abdo.omer.notes.data.models.TaskKey
 import abdo.omer.notes.utlis.Constants
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -33,6 +34,30 @@ fun AppCompatImageView.handledTaskIcon(task: Task){
     }
 }
 
+@BindingAdapter("handleTaskIcon")
+fun ImageView.handleTaskIcon(photoUrl: String){
+    when(photoUrl){
+        TaskKey.SHOPPING.name -> {
+            this.setImageResource(R.drawable.ic_shopping)
+        }
+        TaskKey.SPORTS.name -> {
+            this.setImageResource(R.drawable.ic_sports)
+        }
+        TaskKey.GOTO.name -> {
+            this.setImageResource(R.drawable.ic_go_to)
+        }
+        TaskKey.EVENT.name -> {
+            this.setImageResource(R.drawable.ic_event)
+        }
+        TaskKey.GYM.name -> {
+            this.setImageResource(R.drawable.ic_gym)
+        }
+        TaskKey.OTHERS.name -> {
+            this.setImageResource(R.drawable.ic_others)
+        }
+    }
+}
+
 @BindingAdapter("handledTaskIndicator")
 fun AppCompatImageView.handledTaskIndicator(task: Task){
     when(task.key){
@@ -57,26 +82,26 @@ fun AppCompatImageView.handledTaskIndicator(task: Task){
     }
 }
 
-@BindingAdapter("handleTaskIcon")
-fun ImageView.handleTaskIcon(photoUrl: String){
-    when(photoUrl){
-        TaskKey.SHOPPING.name -> {
-            this.setImageResource(R.drawable.ic_shopping)
+@BindingAdapter("handledTaskDoneIndicator")
+fun AppCompatImageView.handledTaskDoneIndicator(task: Task){
+    when(task.key){
+        TaskKey.SHOPPING -> {
+            this.setImageResource(R.drawable.shopping_done_indicator)
         }
-        TaskKey.SPORTS.name -> {
-            this.setImageResource(R.drawable.ic_sports)
+        TaskKey.SPORTS -> {
+            this.setImageResource(R.drawable.sports_done_indicator)
         }
-        TaskKey.GOTO.name -> {
-            this.setImageResource(R.drawable.ic_go_to)
+        TaskKey.GOTO -> {
+            this.setImageResource(R.drawable.go_to_done_indicator)
         }
-        TaskKey.EVENT.name -> {
-            this.setImageResource(R.drawable.ic_event)
+        TaskKey.EVENT -> {
+            this.setImageResource(R.drawable.event_done_indicator)
         }
-        TaskKey.GYM.name -> {
-            this.setImageResource(R.drawable.ic_gym)
+        TaskKey.GYM -> {
+            this.setImageResource(R.drawable.gym_done_indicator)
         }
-        TaskKey.OTHERS.name -> {
-            this.setImageResource(R.drawable.ic_others)
+        TaskKey.OTHERS -> {
+            this.setImageResource(R.drawable.others_done_indicator)
         }
     }
 }
@@ -134,4 +159,13 @@ fun ImageView.handleTaskIconIndicator(photoUrl: String){
 fun TextView.handledTaskTime(task: Task){
     val times = handleTime(task = task)
     this.text = times
+}
+
+@BindingAdapter("handleCheckBox")
+fun ImageView.handleCheckBox(task: Task){
+    if (!task.taskIsDone) {
+        this.setImageResource(0)
+    } else {
+        this.setImageResource(R.drawable.ic_mark_done)
+    }
 }

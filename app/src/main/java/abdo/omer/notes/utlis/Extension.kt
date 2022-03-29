@@ -41,6 +41,56 @@ import java.time.LocalDate
 import java.time.Month
 import java.time.YearMonth
 
+fun View.fadeIn(duration: Long = 600) {
+    if (visibility != View.VISIBLE)
+        this.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            post {
+                animate().alpha(1f).setDuration(duration).start()
+            }
+        }
+
+}
+
+fun View.fadeOut(duration: Long = 800) {
+    if (visibility != View.GONE)
+        this.apply {
+            alpha = 1f
+            post {
+                animate().alpha(0f).setDuration(duration)
+                    .withEndAction {
+                        visibility = View.GONE
+                    }.start()
+            }
+        }
+}
+
+fun View.fadeIn(duration: Long = 600, visible: Int) {
+    if (visibility != visible)
+        this.apply {
+            alpha = 0f
+            visibility = visible
+            post {
+                animate().alpha(1f).setDuration(duration).start()
+            }
+        }
+
+}
+
+fun View.fadeOut(duration: Long = 800, visible: Int) {
+    if (visibility != visible)
+        this.apply {
+            alpha = 1f
+            post {
+                animate().alpha(0f).setDuration(duration)
+                    .withEndAction {
+                        visibility = visible
+                    }.start()
+            }
+        }
+}
+
 fun Context.loadWithGlide(
     into: ImageView?,
     url: Any?,
@@ -233,28 +283,28 @@ fun TextInputLayout.setBoarder(strokeColor: Int) {
     this.setBoxStrokeColorStateList(AppCompatResources.getColorStateList(this.context, strokeColor))
 }
 
-fun EditText.setColorBoarder(textInputLayout: TextInputLayout) {
+fun EditText.setColorBoarder(textInputLayout: TextInputLayout?) {
     this.addTextChangedListener(object : TextWatcher {
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if (s?.isEmpty() == true) {
-                textInputLayout.setBoarder(R.color.text_input_stroke_red_color)
+                textInputLayout?.setBoarder(R.color.text_input_stroke_red_color)
             } else {
                 when (Constants().selectedIcon(context)) {
-                    TaskKey.SHOPPING.name -> textInputLayout.setBoarder(R.color.text_input_stroke_shopping_color)
-                    TaskKey.SPORTS.name -> textInputLayout.setBoarder(R.color.text_input_stroke_sports_color)
-                    TaskKey.GOTO.name -> textInputLayout.setBoarder(R.color.text_input_stroke_go_to_color)
-                    TaskKey.EVENT.name -> textInputLayout.setBoarder(R.color.text_input_stroke_event_color)
-                    TaskKey.GYM.name -> textInputLayout.setBoarder(R.color.text_input_stroke_gym_color)
-                    TaskKey.OTHERS.name -> textInputLayout.setBoarder(R.color.text_input_stroke_others_color)
+                    TaskKey.SHOPPING.name -> textInputLayout?.setBoarder(R.color.text_input_stroke_shopping_color)
+                    TaskKey.SPORTS.name -> textInputLayout?.setBoarder(R.color.text_input_stroke_sports_color)
+                    TaskKey.GOTO.name -> textInputLayout?.setBoarder(R.color.text_input_stroke_go_to_color)
+                    TaskKey.EVENT.name -> textInputLayout?.setBoarder(R.color.text_input_stroke_event_color)
+                    TaskKey.GYM.name -> textInputLayout?.setBoarder(R.color.text_input_stroke_gym_color)
+                    TaskKey.OTHERS.name -> textInputLayout?.setBoarder(R.color.text_input_stroke_others_color)
                 }
             }
         }
 
         override fun afterTextChanged(s: Editable?) {
-            if (s?.isEmpty() == true) textInputLayout.setBoarder(R.color.text_input_stroke_red_color)
+            if (s?.isEmpty() == true) textInputLayout?.setBoarder(R.color.text_input_stroke_red_color)
         }
 
     })

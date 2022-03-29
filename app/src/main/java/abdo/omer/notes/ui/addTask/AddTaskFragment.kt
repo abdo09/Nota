@@ -4,40 +4,37 @@ import abdo.omer.notes.R
 import abdo.omer.notes.base.BaseSupportFragment
 import abdo.omer.notes.data.models.TaskKey
 import abdo.omer.notes.databinding.FragmentAddTaskBinding
-import abdo.omer.notes.ui.calender.adapter.CalendarDateAdapter
-import abdo.omer.notes.ui.calender.adapter.CalendarTaskAdapter
-import abdo.omer.notes.ui.home.HomeFragmentDirections
 import abdo.omer.notes.utlis.*
 import android.annotation.SuppressLint
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.format.DateFormat.is24HourFormat
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.datepicker.CalendarConstraints
+import android.widget.EditText
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.util.*
+
 class AddTaskFragment : BaseSupportFragment() {
 
     override val viewModel by viewModel<AddTaskViewModel>()
 
-    private lateinit var binding: FragmentAddTaskBinding
+    private var binding: FragmentAddTaskBinding? = null
     private lateinit var addTaskIconAdapter: AddTaskIconAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentAddTaskBinding.inflate(inflater, container, false)
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,8 +46,8 @@ class AddTaskFragment : BaseSupportFragment() {
     }
 
     private fun onTextChangedListener() {
-        binding.edDescription.setBackgroundColour(context = requireContext())
-        binding.edName.setColorBoarder(binding.ipNameLayout)
+        binding?.edDescription?.setBackgroundColour(context = requireContext())
+        binding?.edName?.setColorBoarder(binding?.ipNameLayout)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -60,15 +57,15 @@ class AddTaskFragment : BaseSupportFragment() {
             setBoarderColor()
         }
 
-        binding.btnOpenDate.setOnClickListener {
+        binding?.btnOpenDate?.setOnClickListener {
             handleDatePicker()
         }
 
-        binding.btnOpenTime.setOnClickListener {
+        binding?.btnOpenTime?.setOnClickListener {
             handleTimePicker()
         }
 
-        binding.btnAddTask.setOnClickListener {
+        binding?.btnAddTask?.setOnClickListener {
             if (fieldsValidate()) {
                 viewModel.upsertTask(viewModel.task)
                 navController.navigate(AddTaskFragmentDirections.actionAddTaskFragmentToNavHomeFragment())
@@ -77,23 +74,23 @@ class AddTaskFragment : BaseSupportFragment() {
             ).showDefaultErrorCookie("Check all the fields")
         }
 
-        binding.btnNavHomeFragment.setOnClickListener {
+        binding?.btnNavHomeFragment?.setOnClickListener {
             navController.navigate(AddTaskFragmentDirections.actionAddTaskFragmentToNavHomeFragment())
         }
     }
 
     private fun fieldsValidate(): Boolean {
-        val name = binding.edName.text.toString()
-        val description = binding.edDescription.text.toString()
+        val name = binding?.edName?.text.toString()
+        val description = binding?.edDescription?.text.toString()
         val date = viewModel.task.day.dayInLong
         val time = viewModel.task.time
 
         Timber.d("TIMEOFTASK = ${time.hours}\n${time.minute}")
 
-        if (name.isEmpty()) binding.ipNameLayout.setBoarder(R.color.text_input_stroke_red_color)
+        if (name.isEmpty()) binding?.ipNameLayout?.setBoarder(R.color.text_input_stroke_red_color)
         else viewModel.task.name = name
 
-        if (description.isEmpty()) binding.edDescription.background =
+        if (description.isEmpty()) binding?.edDescription?.background =
             descriptionDrawable(R.color.red_400, requireContext())
         else viewModel.task.description = description
 
@@ -123,25 +120,25 @@ class AddTaskFragment : BaseSupportFragment() {
 
             if (hour <= 9) {
                 time = "0$hour:$minute"
-                binding.tvTime.text = time
+                binding?.tvTime?.text = time
                 viewModel.task.time.hours = hour
                 viewModel.task.time.minute = minute
             }
             if (minute <= 9) {
                 time = "$hour:0$minute"
-                binding.tvTime.text = time
+                binding?.tvTime?.text = time
                 viewModel.task.time.hours = hour
                 viewModel.task.time.minute = minute
             }
             if (hour <= 9 && minute <= 9) {
                 time = "0$hour:0$minute"
-                binding.tvTime.text = time
+                binding?.tvTime?.text = time
                 viewModel.task.time.hours = hour
                 viewModel.task.time.minute = minute
             }
             if (hour > 9 && minute > 9) {
                 time = "$hour:$minute"
-                binding.tvTime.text = time
+                binding?.tvTime?.text = time
                 viewModel.task.time.hours = hour
                 viewModel.task.time.minute = minute
             }
@@ -165,10 +162,11 @@ class AddTaskFragment : BaseSupportFragment() {
             calendar.time = Date(it)
             val date = "${calendar.get(Calendar.DAY_OF_MONTH)}-" +
                     "${getMonth(calendar.get(Calendar.MONTH))}-${calendar.get(Calendar.YEAR)}"
-            binding.tvDate.text = date
+            binding?.tvDate?.text = date
 
             viewModel.task.day.dayInLong = it
-            viewModel.task.day.dayOfTheWeek = getMonth(calendar.get(Calendar.MONTH)).name.substring(0, 3)
+            viewModel.task.day.dayOfTheWeek =
+                getMonth(calendar.get(Calendar.MONTH)).name.substring(0, 3)
             viewModel.task.day.dayOfTheMonth = calendar.get(Calendar.DAY_OF_MONTH).toString()
             viewModel.task.day.month = getMonth(calendar.get(Calendar.MONTH)).toString()
             viewModel.task.day.year = calendar.get(Calendar.YEAR).toString()
@@ -178,7 +176,7 @@ class AddTaskFragment : BaseSupportFragment() {
     private fun setupRecyclerView() {
         addTaskIconAdapter = AddTaskIconAdapter(requireContext())
         addTaskIconAdapter.setHasStableIds(true)
-        binding.iconsRecyclerView.apply {
+        binding?.iconsRecyclerView?.apply {
             adapter = addTaskIconAdapter
             this.hasFixedSize()
         }
@@ -190,65 +188,97 @@ class AddTaskFragment : BaseSupportFragment() {
     private fun setBoarderColor() {
         val selectedIcon = Constants().selectedIcon(requireContext())
         if (selectedIcon == TaskKey.SHOPPING.name) {
-            binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_shopping_color)
-            binding.view.background =
-                drawable(context = requireContext(), backgroundColor = R.color.shopping_color)
-            binding.view2.background =
-                drawable(context = requireContext(), backgroundColor = R.color.shopping_color)
-            binding.edDescription.background =
-                descriptionDrawable(R.color.shopping_color, requireContext())
-            viewModel.task.key = TaskKey.SHOPPING
+            boarderColorRes(
+                ipNameLayout = binding?.ipNameLayout,
+                strokeColor = R.color.text_input_stroke_shopping_color,
+                view = binding?.view,
+                backgroundColor = R.color.shopping_color,
+                view2 = binding?.view2,
+                editText = binding?.edDescription,
+                taskKey = TaskKey.SHOPPING
+            )
         }
         if (selectedIcon == TaskKey.SPORTS.name) {
-            binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_sports_color)
-            binding.view.background =
-                drawable(context = requireContext(), backgroundColor = R.color.sports_color)
-            binding.view2.background =
-                drawable(context = requireContext(), backgroundColor = R.color.sports_color)
-            binding.edDescription.background =
-                descriptionDrawable(R.color.sports_color, requireContext())
-            viewModel.task.key = TaskKey.SPORTS
+            boarderColorRes(
+                ipNameLayout = binding?.ipNameLayout,
+                strokeColor = R.color.text_input_stroke_sports_color,
+                view = binding?.view,
+                backgroundColor = R.color.sports_color,
+                view2 = binding?.view2,
+                editText = binding?.edDescription,
+                taskKey = TaskKey.SPORTS
+            )
         }
         if (selectedIcon == TaskKey.GOTO.name) {
-            binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_go_to_color)
-            binding.view.background =
-                drawable(context = requireContext(), backgroundColor = R.color.go_to_color)
-            binding.view2.background =
-                drawable(context = requireContext(), backgroundColor = R.color.go_to_color)
-            binding.edDescription.background =
-                descriptionDrawable(R.color.go_to_color, requireContext())
-            viewModel.task.key = TaskKey.GOTO
+            boarderColorRes(
+                ipNameLayout = binding?.ipNameLayout,
+                strokeColor = R.color.text_input_stroke_go_to_color,
+                view = binding?.view,
+                backgroundColor = R.color.go_to_color,
+                view2 = binding?.view2,
+                editText = binding?.edDescription,
+                taskKey = TaskKey.GOTO
+            )
+
         }
         if (selectedIcon == TaskKey.EVENT.name) {
-            binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_event_color)
-            binding.view.background =
-                drawable(context = requireContext(), backgroundColor = R.color.event_color)
-            binding.view2.background =
-                drawable(context = requireContext(), backgroundColor = R.color.event_color)
-            binding.edDescription.background =
-                descriptionDrawable(R.color.event_color, requireContext())
-            viewModel.task.key = TaskKey.EVENT
+            boarderColorRes(
+                ipNameLayout = binding?.ipNameLayout,
+                strokeColor = R.color.text_input_stroke_event_color,
+                view = binding?.view,
+                backgroundColor = R.color.event_color,
+                view2 = binding?.view2,
+                editText = binding?.edDescription,
+                taskKey = TaskKey.EVENT
+            )
         }
         if (selectedIcon == TaskKey.GYM.name) {
-            binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_gym_color)
-            binding.view.background =
-                drawable(context = requireContext(), backgroundColor = R.color.gym_color)
-            binding.view2.background =
-                drawable(context = requireContext(), backgroundColor = R.color.gym_color)
-            binding.edDescription.background =
-                descriptionDrawable(R.color.gym_color, requireContext())
-            viewModel.task.key = TaskKey.GYM
+            boarderColorRes(
+                ipNameLayout = binding?.ipNameLayout,
+                strokeColor = R.color.text_input_stroke_gym_color,
+                view = binding?.view,
+                backgroundColor = R.color.gym_color,
+                view2 = binding?.view2,
+                editText = binding?.edDescription,
+                taskKey = TaskKey.GYM
+            )
         }
         if (selectedIcon == TaskKey.OTHERS.name) {
-            binding.ipNameLayout.setBoarder(strokeColor = R.color.text_input_stroke_others_color)
-            binding.view.background =
-                drawable(context = requireContext(), backgroundColor = R.color.others_color)
-            binding.view2.background =
-                drawable(context = requireContext(), backgroundColor = R.color.others_color)
-            binding.edDescription.background =
-                descriptionDrawable(R.color.others_color, requireContext())
-            viewModel.task.key = TaskKey.OTHERS
+            boarderColorRes(
+                ipNameLayout = binding?.ipNameLayout,
+                strokeColor = R.color.text_input_stroke_others_color,
+                view = binding?.view,
+                backgroundColor = R.color.others_color,
+                view2 = binding?.view2,
+                editText = binding?.edDescription,
+                taskKey = TaskKey.OTHERS
+            )
         }
+    }
+
+    private fun boarderColorRes(
+        ipNameLayout: TextInputLayout?,
+        strokeColor: Int,
+        view: View?,
+        backgroundColor: Int,
+        view2: View?,
+        editText: EditText?,
+        taskKey: TaskKey
+    ) {
+        ipNameLayout?.setBoarder(strokeColor = strokeColor)
+        view?.background =
+            drawable(context = requireContext(), backgroundColor = backgroundColor)
+        view2?.background =
+            drawable(context = requireContext(), backgroundColor = backgroundColor)
+        editText?.background =
+            descriptionDrawable(backgroundColor, requireContext())
+        viewModel.task.key = taskKey
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.iconsRecyclerView?.adapter = null
+        binding = null
     }
 
 }
