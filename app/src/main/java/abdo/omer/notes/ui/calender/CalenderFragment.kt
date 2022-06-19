@@ -7,10 +7,7 @@ import abdo.omer.notes.ui.calender.adapter.CalendarDateAdapter
 import abdo.omer.notes.ui.calender.adapter.CalendarTaskAdapter
 import abdo.omer.notes.ui.calender.adapter.CenterLayoutManager
 import abdo.omer.notes.ui.home.HomeFragmentDirections
-import abdo.omer.notes.utlis.Constants
-import abdo.omer.notes.utlis.getAllDateOfMonth
-import abdo.omer.notes.utlis.getMonth
-import abdo.omer.notes.utlis.replaceDoubleQuote
+import abdo.omer.notes.utlis.*
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -103,7 +100,9 @@ class CalenderFragment : BaseSupportFragment() {
         }
 
         viewModel.goToPosition.observe(viewLifecycleOwner) {
-            if (it != -1) binding?.calendarRecycler?.smoothScrollToPosition(it)
+            if (it != -1) requireContext().postToLooper(delay = 500){
+                binding?.calendarRecycler?.smoothScrollToPosition(it)
+            }
         }
     }
 
@@ -160,7 +159,9 @@ class CalenderFragment : BaseSupportFragment() {
         calendarDateAdapter.apply {
             notifyDataSetChanged()
         }
-        binding?.calendarRecycler?.smoothScrollToPosition(date - 1)
+        requireContext().postToLooper(delay = 500){
+            binding?.calendarRecycler?.smoothScrollToPosition(date - 1)
+        }
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
@@ -196,7 +197,9 @@ class CalenderFragment : BaseSupportFragment() {
 
             sortTaskListOfTheDate(viewModel.day, month, year)
 
-            binding?.calendarRecycler?.smoothScrollToPosition(viewModel.day - 1)
+            requireContext().postToLooper(delay = 250){
+                binding?.calendarRecycler?.smoothScrollToPosition(viewModel.day - 1)
+            }
         }
     }
 

@@ -81,13 +81,7 @@ class HomeFragment : BaseSupportFragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun onClick() {
         binding?.btnFinishTasks?.setOnClickListener {
-            viewModel.isDone = !viewModel.isDone
-            if (viewModel.isDone) {
-                binding?.tasksRecyclerView?.fadeOut(400, View.GONE)
-                binding?.tasksRecyclerViewDone?.fadeIn(400)
-                binding?.doAndUndoChangesLayout?.fadeIn(400)
-                binding?.calendarAddTaskLayout?.fadeOut(400, View.GONE)
-            }
+            handleButtonsVisibility()
         }
 
         binding?.btnOpenCalendar?.setOnClickListener {
@@ -99,8 +93,10 @@ class HomeFragment : BaseSupportFragment() {
         }
 
         binding?.btnDoChanges?.setOnClickListener {
-            val notFinishedTasks = tasksDoneAdapter.differ.currentList.filter { task -> !task.taskIsDone }
-            val finishedTasks = tasksDoneAdapter.differ.currentList.filter { task -> task.taskIsDone }
+            val notFinishedTasks =
+                tasksDoneAdapter.differ.currentList.filter { task -> !task.taskIsDone }
+            val finishedTasks =
+                tasksDoneAdapter.differ.currentList.filter { task -> task.taskIsDone }
             tasksDoneAdapter.differ.submitList(notFinishedTasks)
             tasksAdapter.differ.submitList(notFinishedTasks)
             tasksDoneAdapter.notifyDataSetChanged()
@@ -133,7 +129,7 @@ class HomeFragment : BaseSupportFragment() {
         tasksAdapter.setOnItemClickListener { task ->
             navController.navigate(HomeFragmentDirections.actionNavSentBottomSheetFragment(task = task))
         }
-        tasksDoneAdapter.setOnCheckedListener{}
+        tasksDoneAdapter.setOnCheckedListener {}
     }
 
     private fun handleButtonsVisibility() {
@@ -143,6 +139,11 @@ class HomeFragment : BaseSupportFragment() {
             binding?.tasksRecyclerViewDone?.fadeOut(400, View.GONE)
             binding?.calendarAddTaskLayout?.fadeIn(400)
             binding?.doAndUndoChangesLayout?.fadeOut(400, View.GONE)
+        } else {
+            binding?.tasksRecyclerView?.fadeOut(400, View.GONE)
+            binding?.tasksRecyclerViewDone?.fadeIn(400)
+            binding?.doAndUndoChangesLayout?.fadeIn(400)
+            binding?.calendarAddTaskLayout?.fadeOut(400, View.GONE)
         }
     }
 
